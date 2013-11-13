@@ -1,4 +1,4 @@
 fla_debug
 =========
 
-php debugger
+simple php debugger
