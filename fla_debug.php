@@ -17,7 +17,7 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 	
 	// cs-cart default ajax error reporting
 		if(defined('AJAX_REQUEST')){
-			fn_set_notification('N', fn_get_lang_var('notice'), $custom_text.'<span style="color: yellow">(".$type.")</span><pre style="max-height: 550px;overflow: auto;">'.print_r($arg1, TRUE).'</pre>', 'K');
+			fn_set_notification('N', fn_get_lang_var('notice'), $custom_text.'<span style="color: green">('.$type.')</span><pre style="max-height: 550px;overflow: auto;">'.print_r($arg1, TRUE).'</pre>', 'K');
 			return;
 		}
 
