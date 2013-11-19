@@ -3,7 +3,7 @@ fla_debug
 
 simple php debugger
 
-USAGE
+usage
 =========
 
     fla($target_variable);
