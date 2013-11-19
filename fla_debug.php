@@ -10,8 +10,38 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 		$type = gettype($arg1);
 		switch ($type){
 			case 'boolean': $arg1  = $arg1 ? 'TRUE' : 'FALSE'; 		break;
-			case 'string':	$type .= ' - '.strlen($arg1).' chars'; 	break;
-			case 'array':	$type .= ' - '.count($arg1). ' elems'; 	break;
+			case 'string':
+				switch ($arg1) {
+					case '_funcs':
+						$type = 'DEFINED USER FUNCTIONS';
+						$arg1 = get_defined_functions();
+						$arg1 = $arg1['user'];
+						break;
+					case '_vars':
+						$type = 'USER DEFINED VARIABLES';
+						$arg1 = $GLOBALS;
+						unset($arg1['GLOBALS'], $arg1['GLOBALS'], $arg1['_POST'], $arg1['_GET'], $arg1['_COOKIE'], $arg1['_FILES'],  $arg1['_ENV'],  $arg1['_REQUEST'],   $arg1['_SERVER']);
+						break;
+
+					// specials vars
+					case '_post': 		$type = '$_POST'; 		$arg1 = $GLOBALS['_POST'];			break;
+					case '_get': 		$type = '$_GET'; 		$arg1 = $GLOBALS['_GET'];			break;
+					case '_cookies': 	$type = '$_COOKIE'; 	$arg1 = $GLOBALS['_COOKIE'];		break;
+					case '_files':		$type = '$_FILES'; 		$arg1 = $GLOBALS['_FILES'];			break;
+					case '_request': 	$type = '$_REQUEST'; 	$arg1 = $GLOBALS['_REQUEST'];		break;
+					case '_server': 	$type = '$_SERVER'; 	$arg1 = $GLOBALS['_SERVER'];		break;
+
+					case '_trace':
+						$type = 'BACKTRACE';
+						$arg1 = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+						unset($arg1[0]); // remove this function from list
+						break;
+					
+					default: $type .= ' - '.strlen($arg1).' chars'; break;
+				}
+				break;
+			case 'array':	 $type .= ' - '.count($arg1). ' elems'; 	break;
+			case 'resource': $arg1 = get_resource_type($arg1); 			break;
 			default: break;
 		}
 	
@@ -33,11 +63,11 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 					var style=window.getComputedStyle(notes),disp=style.getPropertyValue('display');notes.style.display=(disp=='block')?'none':'block'}
 				</script>
 				<style>
-					.fla_close{position:absolute;right:0px;top:0px;font-size:9px;padding:4px;cursor:pointer;background-color:dimgray;color:dimgray;margin:5px}
-					.fla_debug{background-color:dimgray;border:1px solid black;padding:10px;color:white;text-align:left;margin-bottom:1px}
-					.fla_dbgr{position:relative;min-height:40px;min-width:40px;opacity:0.7;transition:opacity 0.2s ease-in-out}
+					.fla_close{position:absolute;right:0px;top:0px;font-size:9px;padding:4px;cursor:pointer;background-color:#3C3F42;color:#3C3F42;margin:5px}
+					.fla_debug{background-color:#3C3F42;border:1px solid black;padding:10px;color:white;text-align:left;margin-bottom:1px}
+					.fla_dbgr{position:relative;min-height:40px;min-width:40px;opacity:0.8;transition:opacity 0.2s ease-in-out}
 					.fla_dbgr:hover{opacity:1}.fla_close:hover{background-color:red;color:white}
-					.fla_dbgr pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-family:'Courier New',Courier,monospace!important}
+					.fla_dbgr pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-size:13px!important;font-family:'Courier New',Courier,monospace!important}
 					.fla_debug span{font-family:'Courier New',Courier,monospace!important;font-weight:bold}
 				</style>
 			<!-- flaviu@cimpan.ro   -->
