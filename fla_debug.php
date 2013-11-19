@@ -1,6 +1,4 @@
 <?php
-
-
 function fla($arg1, $custom_text = "", $die = FALSE){
 
 	// custom text
@@ -13,7 +11,7 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 			case 'string':
 				switch ($arg1) {
 					case '_funcs':
-						$type = 'DEFINED USER FUNCTIONS';
+						$type = 'USER DEFINED FUNCTIONS';
 						$arg1 = get_defined_functions();
 						$arg1 = $arg1['user'];
 						break;
@@ -37,7 +35,7 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 						unset($arg1[0]); // remove this function from list
 						break;
 					
-					default: $type .= ' - '.strlen($arg1).' chars'; break;
+					default: $type .= ' - '.strlen($arg1).' chars'; 	break;
 				}
 				break;
 			case 'array':	 $type .= ' - '.count($arg1). ' elems'; 	break;
@@ -77,5 +75,4 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 	// die if necessary
 		if($die) exit;
 }
-
 ?>
