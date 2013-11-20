@@ -34,11 +34,16 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 						$arg1 = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 						unset($arg1[0]); // remove this function from list
 						break;
-					
+
 					default: $type .= ' - '.strlen($arg1).' chars'; 	break;
 				}
 				break;
 			case 'array':	 $type .= ' - '.count($arg1). ' elems'; 	break;
+			case 'object': 
+				$arg1 	= array(	'name'		=> 	get_class($arg1),
+									'functions' =>  get_class_methods($arg1),
+									'variables' => 	get_object_vars(  $arg1)); 
+				break;
 			case 'resource': $arg1 = get_resource_type($arg1); 			break;
 			default: break;
 		}
