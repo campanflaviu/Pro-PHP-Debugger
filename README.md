@@ -19,3 +19,7 @@ usage
     fla('_request'); 	// display $_REQUEST variables
     fla('_server');  	// display $_SERVER variables
     fla('_trace');   	// display backtrace
+
+
+20.11.2013 - new feature!
+    -Foldable array element
