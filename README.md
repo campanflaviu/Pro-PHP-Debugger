@@ -25,3 +25,5 @@ changelog
 
     20.11.2013 - Foldable array elements
     19.11.2013 - Fixed multiline array display bug, array css styling
+
+    detect ajax call with $_SERVER['HTTP_X_REQUESTED_WITH'] and display result as json

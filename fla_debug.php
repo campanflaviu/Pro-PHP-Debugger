@@ -63,15 +63,20 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 			default: break;
 		}
 
+
+		// detect ajax call
+		if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
+			if(defined('AJAX_REQUEST'))	// cs-cart default ajax error reporting
+				fn_set_notification('N', fn_get_lang_var('notice'), $custom_text.'<span style="color: green">('.$type.')</span><pre style="max-height: 550px;overflow: auto;">'.print_r($arg1, TRUE).'</pre>', 'K');
+			else
+				echo json_encode($arg1);
+				return;
+		}
 	// custom array folding
 		if(gettype($arg1) != 'array') 	$arg1 = htmlentities(print_r($arg1, TRUE));
 		else 							$arg1 = foldable_array($arg1);
 
-	// cs-cart default ajax error reporting
-		if(defined('AJAX_REQUEST')){
-			fn_set_notification('N', fn_get_lang_var('notice'), $custom_text.'<span style="color: green">('.$type.')</span><pre style="max-height: 550px;overflow: auto;">'.print_r($arg1, TRUE).'</pre>', 'K');
-			return;
-		}
+
 
 	// display
 		echo "
