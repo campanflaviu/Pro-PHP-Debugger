@@ -5,9 +5,9 @@ function foldable_array($arr){
 	foreach($arr as $key => $value){
 		$new_arg .= '<div>';
 		if(gettype($value) == 'array')
-			$new_arg .= '<span onClick="toggle_array(this)" class="fla_key">['.$key.']</span><div class="fla_array"> => Array<br>{<br><div class="fla_inner_array">'.foldable_array($value).'</div>}</div>';
+			$new_arg .= '<span onClick="toggle_array(this)" class="fla_key">['.$key.']</span><span class="fla_array"> => Array<br>{<br><div class="fla_inner_array">'.foldable_array($value).'</div>}</span>';
 		else
-			$new_arg .= '<span onClick="toggle_array(this)" class="fla_key">['.$key.']</span><span class="fla_array"> => '.htmlentities($value).'</span>';
+			$new_arg .= '<span onClick="toggle_array(this)" class="fla_key">['.$key.']</span><span class="fla_array"> => <div style="display: inline">'.htmlentities($value).'</div></span>';
 		$new_arg .= '</div>';
 		$arr = $new_arg;
 	}
@@ -93,12 +93,12 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 				<style>
 					.fla_close{position:absolute;right:0px;top:0px;font-size:9px;padding:4px;cursor:pointer;background-color:#3C3F42;color:#3C3F42;margin:5px}
 					.fla_debug{background-color:#3C3F42;border:1px solid black;padding:10px;color:white;text-align:left;margin-bottom:1px}
-					.fla_dbgr{position:relative;min-height:40px;min-width:40px;opacity:0.8;transition:opacity 0.2s ease-in-out}
+					.fla_dbgr{position:relative;min-height:40px;min-width:40px;opacity:0.9;transition:opacity 0.2s ease-in-out}
 					.fla_dbgr:hover{opacity:1}.fla_close:hover{background-color:red;color:white}
 					.fla_dbgr pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-size:13px!important;font-family:'Courier New',Courier,monospace!important}
 					.fla_debug .fla_descr{font-family:'Courier New',Courier,monospace!important;font-weight:bold}
-					.fla_debug .fla_key{cursor: pointer}
-					.fla_debug div.fla_array{margin-bottom: 7px;margin-left: 30px;margin-top: -14px;}
+					.fla_debug .fla_key{cursor: pointer; font-weight: bold; color: #FF6633}
+					.fla_debug .fla_key:hover{text-decoration: underline;}
 					.fla_debug div.fla_inner_array{margin-left: 30px;}</style>
 			<!-- flaviu@cimpan.ro   -->
 

@@ -10,17 +10,18 @@ usage
 
  custom output
  
-    fla('_funcs');		// display all user declared and available functions
-    fla('_vars');		// display all user defined variables
-    fla('_post');   	// display $_POST variables
-    fla('_get');    	// display $_GET variables
-    fla('_cookies');	// display $_COOKIE variables
-    fla('_files');   	// display $_FILES variables
-    fla('_request'); 	// display $_REQUEST variables
-    fla('_server');  	// display $_SERVER variables
-    fla('_trace');   	// display backtrace
+    fla('_funcs');		// all user declared and available functions
+    fla('_vars');		// all user defined variables
+    fla('_post');   	// $_POST variables
+    fla('_get');    	// $_GET variables
+    fla('_cookies');	// $_COOKIE variables
+    fla('_files');   	// $_FILES variables
+    fla('_request'); 	// $_REQUEST variables
+    fla('_server');  	// $_SERVER variables
+    fla('_trace');   	// backtrace
 
+changelog
+=========
 
-20.11.2013 - new feature!
-
-    -Foldable array elements
+    20.11.2013 - Foldable array elements
+    19.11.2013 - Fixed multiline array display bug, array css styling
