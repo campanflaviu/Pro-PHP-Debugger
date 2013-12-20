@@ -25,3 +25,16 @@ changelog
 
     20.11.2013 - Foldable array elements
     19.11.2013 - Fixed multiline array display bug, array css styling, detect ajax call with $_SERVER['HTTP_X_REQUESTED_WITH'] and display result as json
+
+todo
+=========
+    - memory usage
+    - cpu usage? (w/ exec if available or sys_getloadavg)
+    - highlight_file('file.php')
+    - php_uname (host OS), php_sapi_name (interface between web server and PHP)
+    - PHP_VERSION
+    - on/off switch
+    - IP filter ($_SERVER["REMOTE_ADDR"] and $_SERVER['HTTP_X_FORWARDED_FOR'])
+    - dockable option
+    - optimize css include
+    - features array for easy disabling (to increase performance)
