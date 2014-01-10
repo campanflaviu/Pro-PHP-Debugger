@@ -40,13 +40,13 @@ changelog
 
 todo
 =========
- [x] ~~on/off switch~~
- [x] ~~IP filter~~
- [ ] memory usage
- [ ] cpu usage? (w/ exec if available or sys_getloadavg)
- [ ] highlight_file('file.php')
- [ ] php_uname (host OS), php_sapi_name (interface between web server and PHP)
- [ ] PHP_VERSION
- [ ] dockable option
- [ ] optimize css include
- [ ] features array for easy disabling (to increase performance)
+    - [x] ~~on/off switch~~
+    - [x] ~~IP filter~~
+    - [ ] memory usage
+    - [ ] cpu usage? (w/ exec if available or sys_getloadavg)
+    - [ ] highlight_file('file.php')
+    - [ ] php_uname (host OS), php_sapi_name (interface between web server and PHP)
+    - [ ] PHP_VERSION
+    - [ ] dockable option
+    - [ ] optimize css include
+    - [ ] features array for easy disabling (to increase performance)
