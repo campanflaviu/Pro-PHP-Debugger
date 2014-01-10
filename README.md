@@ -6,7 +6,9 @@ simple php debugger
 usage
 =========
 
-    fla($target_variable);
+    fla($target_variable, $second_param);
+
+$second_param can be a custom string or if 'TRUE' it would exit atfer the output is made
 
  custom output
  
@@ -39,10 +41,6 @@ todo
     - highlight_file('file.php')
     - php_uname (host OS), php_sapi_name (interface between web server and PHP)
     - PHP_VERSION
-    <del>- on/off switch</del>
-    <del>- IP filter ($_SERVER["REMOTE_ADDR"] and $_SERVER['HTTP_X_FORWARDED_FOR'])</del>
     - dockable option
     - optimize css include
     - features array for easy disabling (to increase performance)
-
-uncommited fixes
