@@ -12,6 +12,7 @@ $second_param can be a custom string or if 'TRUE' it would exit atfer the output
 
  custom output
  
+ ```php
     fla('_funcs');		// all user declared and available functions
     fla('_vars');		// all user defined variables
     fla('_post');   	// $_POST variables
@@ -21,6 +22,7 @@ $second_param can be a custom string or if 'TRUE' it would exit atfer the output
     fla('_request'); 	// $_REQUEST variables
     fla('_server');  	// $_SERVER variables
     fla('_trace');   	// backtrace
+```
 
 changelog
 =========
