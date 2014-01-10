@@ -4,14 +4,14 @@
 // 
 // flaviu@cimpan.ro 
 // http://cimpan.ro
-// 2013
+// 2013 - 2014
 // 
 
 // config
 	define('FLA_VERSION',   '0.3');
 	define('ENABLED',   	TRUE);
 	define('LIVE_MODE', 	TRUE);
-	define('DEBUG_IP',  	'79.119.112.117');
+	define('DEBUG_IP',  	'78.97.169.161');
 
 
 
