@@ -40,8 +40,8 @@ changelog
 
 todo
 =========
-    - [x] ~~on/off switch~~
-    - [x] ~~IP filter~~
+    - [x] on/off switch
+    - [x] IP filter
     - [ ] memory usage
     - [ ] cpu usage? (w/ exec if available or sys_getloadavg)
     - [ ] highlight_file('file.php')
