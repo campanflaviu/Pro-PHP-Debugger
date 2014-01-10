@@ -1,10 +1,26 @@
 <?php
 
+// Pro PHP Debugger
+// 
+// flaviu@cimpan.ro 
+// http://cimpan.ro
+// 2013
+// 
+
+// config
+	define('FLA_VERSION',   '0.3');
+	define('ENABLED',   	TRUE);
+	define('LIVE_MODE', 	TRUE);
+	define('DEBUG_IP',  	'79.119.112.117');
+
+
+
+
 function foldable_array($arr){
 	$new_arg = '';
 	foreach($arr as $key => $value){
 		$new_arg .= '<div>';
-		if(gettype($value) == 'array')
+		if(is_array($value) || is_object($value))
 			$new_arg .= '<span onClick="toggle_array(this)" class="fla_key">['.$key.']</span><span class="fla_array"> => Array<br>{<br><div class="fla_inner_array">'.foldable_array($value).'</div>}</span>';
 		else
 			$new_arg .= '<span onClick="toggle_array(this)" class="fla_key">['.$key.']</span><span class="fla_array"> => <div style="display: inline">'.htmlentities($value).'</div></span>';
@@ -16,8 +32,15 @@ function foldable_array($arr){
 
 function fla($arg1, $custom_text = "", $die = FALSE){
 
+	// exit if LIVE_MODE or not ENABLED
+		if(!ENABLED || (LIVE_MODE && $_SERVER['REMOTE_ADDR'] != '127.0.0.1' && $_SERVER['REMOTE_ADDR'] != DEBUG_IP)) return;
+
 	// custom text
-		if($custom_text) $custom_text .= '<br>';
+		if($custom_text === TRUE) {
+			$die = TRUE;
+			$custom_text = '';
+		}
+		elseif($custom_text)  $custom_text .= '<br>';
 
 	// variable type processing
 		$type = gettype($arg1);
@@ -73,8 +96,8 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 				return;
 		}
 	// custom array folding
-		if(gettype($arg1) != 'array') 	$arg1 = htmlentities(print_r($arg1, TRUE));
-		else 							$arg1 = foldable_array($arg1);
+		if(!is_array($arg1)) 	$arg1 = htmlentities(print_r($arg1, TRUE));
+		else 					$arg1 = foldable_array($arg1);
 
 
 
@@ -101,7 +124,7 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 					.fla_dbgr{position:relative;min-height:40px;min-width:40px;opacity:0.9;transition:opacity 0.2s ease-in-out}
 					.fla_dbgr:hover{opacity:1}.fla_close:hover{background-color:red;color:white}
 					.fla_dbgr pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-size:13px!important;font-family:'Courier New',Courier,monospace!important}
-					.fla_debug .fla_descr{font-family:'Courier New',Courier,monospace!important;font-weight:bold}
+					.fla_key,.fla_array,.fla_array div{font-family:'Courier New',Courier,monospace!important;font-weight:bold}
 					.fla_debug .fla_key{cursor: pointer; font-weight: bold; color: #FF6633}
 					.fla_debug .fla_key:hover{text-decoration: underline;}
 					.fla_debug div.fla_inner_array{margin-left: 30px;}</style>
