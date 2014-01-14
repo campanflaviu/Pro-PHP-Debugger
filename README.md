@@ -9,13 +9,13 @@ usage
  ```php
     fla($target_variable, $second_param);
 ```
+`$second_param` can be a custom string or if `TRUE` it would exit atfer the output is made
 ```php
     if(fla_sandbox()){
      // sandboxed code here
   }
 ```
 
-`$second_param` can be a custom string or if `TRUE` it would exit atfer the output is made
 
  custom output
  
@@ -28,19 +28,19 @@ usage
 changelog
 =========
 
-    v0.1   - Foldable array elements
-    v0.2   - Fixed multiline array display bug, array css styling, detect ajax call with $_SERVER['HTTP_X_REQUESTED_WITH'] and display result as json
+    v0.4   - removed post, get, cookies, files, request, server -> redundant
+           - added fla_sandbox() 
+    v0.3.1 - fix css rule
+           - change LIVE with VIEW_FILTER
+           - added USER_AGENT_VAR filter 
     v0.3   - added object to array folding system (fixed error)
            - config zone (LIVE_MODE - viewable only for provided DEBUG_IP or localhost)
            - updated css rules
            - if the second parameter is FALSE, then it would die, otherwise it would print the text
            - on/off switch
            - IP filter
-    v0.3.1 - fix css rule
-           - change LIVE with VIEW_FILTER
-           - added USER_AGENT_VAR filter 
-    v0.4   - removed post, get, cookies, files, request, server -> redundant
-           - added fla_sandbox() 
+    v0.2   - Fixed multiline array display bug, array css styling, detect ajax call with $_SERVER['HTTP_X_REQUESTED_WITH'] and display result as json
+    v0.1   - Foldable array elements
 
 todo
 =========

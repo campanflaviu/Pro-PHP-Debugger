@@ -8,7 +8,7 @@
 // 
 
 // config
-	define('FLA_VERSION',   	'0.3.1');
+	define('FLA_VERSION',   	'0.4');
 	define('ENABLED',   		TRUE);
 
 	define('VIEW_FILTER', 		'USER_AGENT_VAR'); // or 'DEBUG_IP' or FALSE (caution!)
