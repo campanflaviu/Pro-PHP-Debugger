@@ -9,6 +9,11 @@ usage
  ```php
     fla($target_variable, $second_param);
 ```
+```php
+    if(fla_sandbox()){
+     // sandboxed code here
+  }
+```
 
 `$second_param` can be a custom string or if `TRUE` it would exit atfer the output is made
 
@@ -34,6 +39,8 @@ changelog
     v0.3.1 - fix css rule
            - change LIVE with VIEW_FILTER
            - added USER_AGENT_VAR filter 
+    v0.4   - removed post, get, cookies, files, request, server -> redundant
+           - added fla_sandbox() 
 
 todo
 =========
@@ -48,6 +55,3 @@ todo
     - [ ] optimize css include
     - [ ] features array for easy disabling (to increase performance)
     - [ ] array fold indicator
-
-    uncommited changes
-     - removed post, get, cookies, files, request, server -> redundant
