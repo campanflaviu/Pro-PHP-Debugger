@@ -11,12 +11,19 @@
 	define('FLA_VERSION',   	'0.3.1');
 	define('ENABLED',   		TRUE);
 
-	define('VIEW_FILTER', 		'USER_AGENT_VAR');
+	define('VIEW_FILTER', 		'USER_AGENT_VAR'); // or 'DEBUG_IP' or FALSE (caution!)
 	define('DEBUG_IP',  		'0.0.0.0');
 	define('USER_AGENT_VAR', 	'flaviu@cimpan.ro');
 
 
 
+
+function fla_sandbox(){ // check if sandbox values are applied
+	if(!ENABLED) return FALSE;
+	if(VIEW_FILTER && VIEW_FILTER == 'DEBUG_IP' && DEBUG_IP != $_SERVER['REMOTE_ADDR'] && $_SERVER['REMOTE_ADDR'] != '127.0.0.1') return FALSE;
+	if(VIEW_FILTER && VIEW_FILTER == 'USER_AGENT_VAR' && strpos($_SERVER['HTTP_USER_AGENT'], USER_AGENT_VAR) === FALSE) return FALSE;
+	return TRUE;
+}
 
 function foldable_array($arr){
 	$new_arg = '';
@@ -35,9 +42,7 @@ function foldable_array($arr){
 function fla($arg1, $custom_text = "", $die = FALSE){
 
 	// exit if VIEW_FILTER is not applied or not ENABLED
-	if(!ENABLED) return;
-	if(VIEW_FILTER && VIEW_FILTER == 'DEBUG_IP' && DEBUG_IP != $_SERVER['REMOTE_ADDR'] && $_SERVER['REMOTE_ADDR'] != '127.0.0.1') return;
-	if(VIEW_FILTER && VIEW_FILTER == 'USER_AGENT_VAR' && strpos($_SERVER['HTTP_USER_AGENT'], USER_AGENT_VAR) === FALSE) return;
+	if(!fla_sandbox()) return;
 
 	// custom text
 		if($custom_text === TRUE) {
@@ -62,14 +67,6 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 						$arg1 = $GLOBALS;
 						unset($arg1['GLOBALS'], $arg1['GLOBALS'], $arg1['_POST'], $arg1['_GET'], $arg1['_COOKIE'], $arg1['_FILES'],  $arg1['_ENV'],  $arg1['_REQUEST'],   $arg1['_SERVER']);
 						break;
-
-					// specials vars
-					case '_post': 		$type = '$_POST'; 		$arg1 = $GLOBALS['_POST'];			break;
-					case '_get': 		$type = '$_GET'; 		$arg1 = $GLOBALS['_GET'];			break;
-					case '_cookies': 	$type = '$_COOKIE'; 	$arg1 = $GLOBALS['_COOKIE'];		break;
-					case '_files':		$type = '$_FILES'; 		$arg1 = $GLOBALS['_FILES'];			break;
-					case '_request': 	$type = '$_REQUEST'; 	$arg1 = $GLOBALS['_REQUEST'];		break;
-					case '_server': 	$type = '$_SERVER'; 	$arg1 = $GLOBALS['_SERVER'];		break;
 
 					case '_trace':
 						$type = 'BACKTRACE';

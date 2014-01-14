@@ -17,12 +17,6 @@ usage
  ```php
     fla('_funcs');		// all user declared and available functions
     fla('_vars');		// all user defined variables
-    fla('_post');   	// $_POST variables
-    fla('_get');    	// $_GET variables
-    fla('_cookies');	// $_COOKIE variables
-    fla('_files');   	// $_FILES variables
-    fla('_request'); 	// $_REQUEST variables
-    fla('_server');  	// $_SERVER variables
     fla('_trace');   	// backtrace
 ```
 
@@ -54,3 +48,6 @@ todo
     - [ ] optimize css include
     - [ ] features array for easy disabling (to increase performance)
     - [ ] array fold indicator
+
+    uncommited changes
+     - removed post, get, cookies, files, request, server -> redundant
