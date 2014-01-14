@@ -8,10 +8,12 @@
 // 
 
 // config
-	define('FLA_VERSION',   '0.3');
-	define('ENABLED',   	TRUE);
-	define('LIVE_MODE', 	TRUE);
-	define('DEBUG_IP',  	'78.97.169.161');
+	define('FLA_VERSION',   	'0.3.1');
+	define('ENABLED',   		TRUE);
+
+	define('VIEW_FILTER', 		'USER_AGENT_VAR');
+	define('DEBUG_IP',  		'0.0.0.0');
+	define('USER_AGENT_VAR', 	'flaviu@cimpan.ro');
 
 
 
@@ -32,8 +34,10 @@ function foldable_array($arr){
 
 function fla($arg1, $custom_text = "", $die = FALSE){
 
-	// exit if LIVE_MODE or not ENABLED
-		if(!ENABLED || (LIVE_MODE && $_SERVER['REMOTE_ADDR'] != '127.0.0.1' && $_SERVER['REMOTE_ADDR'] != DEBUG_IP)) return;
+	// exit if VIEW_FILTER is not applied or not ENABLED
+	if(!ENABLED) return;
+	if(VIEW_FILTER && VIEW_FILTER == 'DEBUG_IP' && DEBUG_IP != $_SERVER['REMOTE_ADDR'] && $_SERVER['REMOTE_ADDR'] != '127.0.0.1') return;
+	if(VIEW_FILTER && VIEW_FILTER == 'USER_AGENT_VAR' && strpos($_SERVER['HTTP_USER_AGENT'], USER_AGENT_VAR) === FALSE) return;
 
 	// custom text
 		if($custom_text === TRUE) {
@@ -87,7 +91,7 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 		}
 
 
-		// detect ajax call
+	// detect ajax call
 		if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
 			if(defined('AJAX_REQUEST'))	// cs-cart default ajax error reporting
 				fn_set_notification('N', fn_get_lang_var('notice'), $custom_text.'<span style="color: green">('.$type.')</span><pre style="max-height: 550px;overflow: auto;">'.print_r($arg1, TRUE).'</pre>', 'K');
@@ -124,12 +128,11 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 					.fla_dbgr{position:relative;min-height:40px;min-width:40px;opacity:0.9;transition:opacity 0.2s ease-in-out}
 					.fla_dbgr:hover{opacity:1}.fla_close:hover{background-color:red;color:white}
 					.fla_dbgr pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-size:13px!important;font-family:'Courier New',Courier,monospace!important}
-					.fla_key,.fla_array,.fla_array div{font-family:'Courier New',Courier,monospace!important;font-weight:bold}
+					.fla_key,.fla_array,.fla_array div{font-family:'Courier New',Courier,monospace!important;font-weight:bold;color:white}
 					.fla_debug .fla_key{cursor: pointer; font-weight: bold; color: #FF6633}
 					.fla_debug .fla_key:hover{text-decoration: underline;}
 					.fla_debug div.fla_inner_array{margin-left: 30px;}</style>
 			<!-- flaviu@cimpan.ro   -->
-
 		";
 
 	// die if necessary
