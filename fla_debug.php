@@ -28,16 +28,34 @@ function fla_sandbox(){ // check if sandbox values are applied
 function foldable_array($arr){
 	$new_arg = '';
 	foreach($arr as $key => $value){
-		$new_arg .= '<div>';
+		$new_arg .= '<div><span onClick="toggle_array(this)" class="fla_key">['.$key.']</span><span class="fla_array"> => ';
 		if(is_array($value) || is_object($value))
-			$new_arg .= '<span onClick="toggle_array(this)" class="fla_key">['.$key.']</span><span class="fla_array"> => Array<br>{<br><div class="fla_inner_array">'.foldable_array($value).'</div>}</span>';
+			$new_arg .= 'Array<br>{<br><div class="fla_inner_array">'.foldable_array($value).'</div>}';
 		else
-			$new_arg .= '<span onClick="toggle_array(this)" class="fla_key">['.$key.']</span><span class="fla_array"> => <div style="display: inline">'.htmlentities($value).'</div></span>';
-		$new_arg .= '</div>';
+			$new_arg .= '<div style="display: inline">'.htmlentities($value).'</div>';
+		$new_arg .= '</span></div>';
 		$arr = $new_arg;
 	}
 	return $arr;
 }
+
+function get_mem_usage(){
+	$mem_usage = memory_get_usage(true);
+	$unit  =array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+    return @round($mem_usage / pow(1024, ($i = floor(log($mem_usage, 1024)))), 2).' '.$unit[$i];
+}
+
+function get_cpu_usage(){
+	if(function_exists('sys_getloadavg')){
+		$a = sys_getloadavg();
+		$c['1 MINUTE'] 		= $a[0];
+		$c['5 MINUTES'] 	= $a[1];
+		$c['15 MINUTES'] 	= $a[2];
+		return $c;
+	}
+	return 'NA';
+}
+
 
 function fla($arg1, $custom_text = "", $die = FALSE){
 
@@ -74,7 +92,22 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 						unset($arg1[0]); // remove this function from list
 						break;
 
-					default: $type .= ' - '.strlen($arg1).' chars'; 	break;
+					case '_server':
+						$type = 'SERVER DETAILS';
+						$arg1 = array(	'PHP VERSION' 			=> phpversion(),
+										'OS NAME' 				=> php_uname('s'),
+										'HOST NAME' 			=> php_uname('n'),
+										'OS RELEASE' 			=> php_uname('r'),
+										'OS VERSION' 			=> php_uname('v'),
+										'SERVER ARCHITECTURE' 	=> php_uname('m'),
+										'INTERFACE'				=> php_sapi_name(),
+										'MEMORY USAGE'			=> get_mem_usage(),
+										'CPU LOAD'				=> get_cpu_usage());
+						break;
+
+					default: 
+						$type .= ' - '.strlen($arg1).' chars'; 	
+						break;
 				}
 				break;
 			case 'array':	 $type .= ' - '.count($arg1). ' elems'; 	break;

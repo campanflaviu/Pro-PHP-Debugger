@@ -22,12 +22,14 @@ usage
  ```php
     fla('_funcs');		// all user declared and available functions
     fla('_vars');		// all user defined variables
-    fla('_trace');   	// backtrace
+    fla('_trace');    // backtrace
+    fla('_server');   	// server details
 ```
 
 changelog
 =========
 
+    v0.5   - added server details (_server) - memory usage, cpu load, OS, hostname, interface between browser and php, php version
     v0.4   - removed post, get, cookies, files, request, server -> redundant
            - added fla_sandbox() 
     v0.3.1 - fix css rule
@@ -46,11 +48,11 @@ todo
 =========
     - [x] on/off switch
     - [x] IP filter
-    - [ ] memory usage
-    - [ ] cpu usage? (w/ exec if available or sys_getloadavg)
+    - [x] memory usage
+    - [x] cpu usage? (sys_getloadavg)
     - [ ] highlight_file('file.php')
-    - [ ] php_uname (host OS), php_sapi_name (interface between web server and PHP)
-    - [ ] PHP_VERSION
+    - [x] php_uname (host OS), php_sapi_name (interface between web server and PHP)
+    - [x] PHP_VERSION
     - [ ] dockable option
     - [ ] optimize css include
     - [ ] features array for easy disabling (to increase performance)
