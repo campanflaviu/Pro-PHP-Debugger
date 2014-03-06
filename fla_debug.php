@@ -101,6 +101,7 @@ function fla_process($arg1, $custom_text, $die){
 			$die = TRUE;
 			$custom_text = '';
 		}
+		if($arg1 == '_file');
 		elseif($custom_text)  $custom_text .= '<br>';
 
 	// variable type processing
@@ -139,6 +140,10 @@ function fla_process($arg1, $custom_text, $die){
 										'CPU LOAD'				=> get_cpu_usage());
 						break;
 
+					case '_file':
+						$type = 'FILE';
+						$arg1 = file_exists($custom_text) ? highlight_file($custom_text, TRUE) : 'File does not exist!';
+						break;
 					default: 
 						$type .= ' - '.strlen($arg1).' chars'; 	
 						break;
@@ -170,20 +175,17 @@ function fla_print_full($arg1, $type, $custom){
 	global $fla_css;
 
 	// custom array folding
-		if(!is_array($arg1)) 	$arg1 = htmlentities(print_r($arg1, TRUE));
-		else 					$arg1 = foldable_array($arg1);
+		if(!is_array($arg1) && $type != 'FILE') $arg1 = htmlentities(print_r($arg1, TRUE));
+		elseif($type == 'FILE');
+		else $arg1 = foldable_array($arg1);
 
 	// display
-		echo "
-			<!-- flaviu@cimpan.ro  - DEBUGGER -->
-				<div class='fla_dbgr'>
-					<div class='fla_debug'>".$custom."<span class='fla_descr'style='color: yellow'>(".$type.")</span><pre id='fla_pre'>".$arg1."</pre></div>
-					<div class='fla_close' onClick='hide_fla(this)'>D</div>
-				</div>";
+		echo "<!-- flaviu@cimpan.ro  - DEBUGGER -->
+				<div class='fla_dbgr'><div class='fla_debug".(($type != 'FILE') ? "'>".$custom."<span class='fla_descr' style='color: yellow'>(".$type.")</span><pre>".$arg1."</pre id='fla_pre'>" : " white'>".$arg1)."</div><div class='fla_close' onClick='hide_fla(this)'>D</div></div>";
 		if(isset($fla_css) && $fla_css) return;
 		else{
 			echo "<script>function hide_fla(e){var el=e.parentNode,notes=null
-					for(var i=0; i<el.childNodes.length; i++){if (el.childNodes[i].className=='fla_debug'){notes=el.childNodes[i];break}}
+					for(var i=0; i<el.childNodes.length; i++)if (el.childNodes[i].className=='fla_debug'||el.childNodes[i].className=='fla_debug white'){notes=el.childNodes[i];break}
 					var style=window.getComputedStyle(notes),disp=style.getPropertyValue('display');notes.style.display=(disp=='block')?'none':'block'}
 					
 					function toggle_array(e){var el=e.parentNode;var disp_status = el.getElementsByClassName('fla_array')[0].style.display;
@@ -201,6 +203,7 @@ function fla_print_full($arg1, $type, $custom){
 					.fla_key,.fla_array,.fla_array div{font-family:'Courier New',Courier,monospace!important;font-weight:bold;color:white}
 					.fla_debug .fla_key{cursor: pointer; font-weight: bold; color: #FF6633}
 					.fla_debug .fla_key:hover{text-decoration: underline;}
+					.fla_debug.white{background-color:#DDD}
 					.fla_debug div.fla_inner_array{margin-left: 30px;}</style>";
 					$fla_css = TRUE;
 		}
@@ -210,12 +213,13 @@ function fla_print_lite($arg1, $type, $custom){
 	global $fla_css;
 
 	// custom array folding
-		if(!is_array($arg1)) 	$arg1 = htmlentities(print_r($arg1, TRUE));
-		else 					$arg1 = foldable_array_lite($arg1);
+		if(!is_array($arg1) && $type != 'FILE') $arg1 = htmlentities(print_r($arg1, TRUE));
+		elseif($type == 'FILE');
+		else $arg1 = foldable_array_lite($arg1);
 
 	// display
 		echo "<!-- flaviu@cimpan.ro  - DEBUGGER LITE -->
-				<div class='fla_dbgr_lite'><div class='fla_debug_lite'>".$custom."<span style='color: yellow'>(".$type.")</span><pre>".$arg1."</pre></div></div>";
+				<div class='fla_dbgr_lite'><div class='fla_debug_lite".(($type != 'FILE') ? "'>".$custom."<span style='color: yellow'>(".$type.")</span><pre>".$arg1."</pre>" : " white'>".$arg1)."</div></div>";
 		if(isset($fla_css) && $fla_css) return;
 		else{echo "<style>
 					.fla_debug_lite{background-color:#000;padding:10px;color:white;text-align:left;margin-bottom:1px}
@@ -223,6 +227,7 @@ function fla_print_lite($arg1, $type, $custom){
 					.fla_dbgr_lite pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-size:13px!important;font-family:'Courier New',Courier,monospace!important;border:0px!important;background:none!important;}
 					.fla_key,.fla_array,.fla_array div{font-family:'Courier New',Courier,monospace!important;font-weight:bold;color:white}
 					.fla_debug_lite .fla_key{font-weight: bold; color: #FF6633}
+					.fla_debug_lite.white{background-color:#DDD}
 					.fla_debug_lite div.fla_inner_array{margin-left: 30px;}
 				</style>";
 				$fla_css = TRUE;
