@@ -22,7 +22,7 @@ usage
  ```php
     fla('_funcs');		// all user declared and available functions
     fla('_vars');		// all user defined variables
-    fla('_trace');    // backtrace
+    fla('_trace');      // backtrace
     fla('_server');   	// server details
 ```
 
@@ -57,8 +57,3 @@ todo
     - [ ] optimize css include
     - [ ] features array for easy disabling (to increase performance)
     - [ ] array fold indicator
-
-    - fixed notice
-    - constant shortened
-    new names: fester, mo
-
