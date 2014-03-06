@@ -57,3 +57,8 @@ todo
     - [ ] optimize css include
     - [ ] features array for easy disabling (to increase performance)
     - [ ] array fold indicator
+
+    - fixed notice
+    - constant shortened
+    new names: fester, mo
+

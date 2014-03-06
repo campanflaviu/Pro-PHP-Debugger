@@ -8,20 +8,20 @@
 // 
 
 // config
-	define('FLA_VERSION',   	'0.5');
-	define('ENABLED',   		TRUE);
+	define('FLA_VERSION',   '0.6');
+	define('ENABLED',   	TRUE);
 
-	define('VIEW_FILTER', 		'USER_AGENT_VAR'); // or 'DEBUG_IP' or FALSE (caution!)
-	define('DEBUG_IP',  		'0.0.0.0');
-	define('USER_AGENT_VAR', 	'flaviu@cimpan.ro');
+	define('VIEW_FILTER', 	'USER_AGENT'); // or 'DEBUG_IP' or FALSE (caution!)
+	define('DEBUG_IP',  	'0.0.0.0');
+	define('USER_AGENT', 	'flaviu@cimpan.ro');
 
-
-
+// include CSS and JS only once
+	if(!isset($fla_css)) $fla_css = FALSE;
 
 function fla_sandbox(){ // check if sandbox values are applied
 	if(!ENABLED) return FALSE;
 	if(VIEW_FILTER && VIEW_FILTER == 'DEBUG_IP' && DEBUG_IP != $_SERVER['REMOTE_ADDR'] && $_SERVER['REMOTE_ADDR'] != '127.0.0.1') return FALSE;
-	if(VIEW_FILTER && VIEW_FILTER == 'USER_AGENT_VAR' && strpos($_SERVER['HTTP_USER_AGENT'], USER_AGENT_VAR) === FALSE) return FALSE;
+	if(VIEW_FILTER && VIEW_FILTER == 'USER_AGENT' && strpos($_SERVER['HTTP_USER_AGENT'], USER_AGENT) === FALSE) return FALSE;
 	return TRUE;
 }
 
@@ -29,8 +29,28 @@ function foldable_array($arr){
 	$new_arg = '';
 	foreach($arr as $key => $value){
 		$new_arg .= '<div><span onClick="toggle_array(this)" class="fla_key">['.$key.']</span><span class="fla_array"> => ';
-		if(is_array($value) || is_object($value))
-			$new_arg .= 'Array<br>{<br><div class="fla_inner_array">'.foldable_array($value).'</div>}';
+		if(is_array($value) || is_object($value)){
+			$fold_arr = foldable_array($value);
+			$fold_arr = !is_string($fold_arr) ? implode('', $fold_arr) : $fold_arr;
+			$new_arg .= 'Array<br>{<br><div class="fla_inner_array">'.$fold_arr.'</div>}';
+		}
+		else
+			$new_arg .= '<div style="display: inline">'.htmlentities($value).'</div>';
+		$new_arg .= '</span></div>';
+		$arr = $new_arg;
+	}
+	return $arr;
+}
+
+function foldable_array_lite($arr){
+	$new_arg = '';
+	foreach($arr as $key => $value){
+		$new_arg .= '<div><span class="fla_key">['.$key.']</span><span> => ';
+		if(is_array($value) || is_object($value)){
+			$fold_arr = foldable_array($value);
+			$fold_arr = !is_string($fold_arr) ? implode('', $fold_arr) : $fold_arr;
+			$new_arg .= 'Array<br>{<br><div class="fla_inner_array">'.$fold_arr.'</div>}';
+		}
 		else
 			$new_arg .= '<div style="display: inline">'.htmlentities($value).'</div>';
 		$new_arg .= '</span></div>';
@@ -56,9 +76,23 @@ function get_cpu_usage(){
 	return 'NA';
 }
 
-
 function fla($arg1, $custom_text = "", $die = FALSE){
+	$r = fla_process($arg1, $custom_text, $die);
+	fla_print_full($r['arg'], $r['type'], $r['custom']);
+	
+	// die if necessary
+		if($die) exit;
+}
 
+function flb($arg1, $custom_text = "", $die = FALSE){
+	$r = fla_process($arg1, $custom_text, $die);
+	fla_print_lite($r['arg'], $r['type'], $r['custom']);
+
+	// die if necessary
+		if($die) exit;
+}
+
+function fla_process($arg1, $custom_text, $die){
 	// exit if VIEW_FILTER is not applied or not ENABLED
 	if(!fla_sandbox()) return;
 
@@ -129,20 +163,26 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 				echo json_encode($arg1);
 				return;
 		}
+	return array('arg' => $arg1, 'type' => $type, 'custom' => $custom_text);
+}
+
+function fla_print_full($arg1, $type, $custom){
+	global $fla_css;
+
 	// custom array folding
 		if(!is_array($arg1)) 	$arg1 = htmlentities(print_r($arg1, TRUE));
 		else 					$arg1 = foldable_array($arg1);
-
-
 
 	// display
 		echo "
 			<!-- flaviu@cimpan.ro  - DEBUGGER -->
 				<div class='fla_dbgr'>
-					<div class='fla_debug'>".$custom_text."<span class='fla_descr'style='color: yellow'>(".$type.")</span><pre id='fla_pre'>".$arg1."</pre></div>
+					<div class='fla_debug'>".$custom."<span class='fla_descr'style='color: yellow'>(".$type.")</span><pre id='fla_pre'>".$arg1."</pre></div>
 					<div class='fla_close' onClick='hide_fla(this)'>D</div>
-				</div>
-				<script>function hide_fla(e){var el=e.parentNode,notes=null
+				</div>";
+		if(isset($fla_css) && $fla_css) return;
+		else{
+			echo "<script>function hide_fla(e){var el=e.parentNode,notes=null
 					for(var i=0; i<el.childNodes.length; i++){if (el.childNodes[i].className=='fla_debug'){notes=el.childNodes[i];break}}
 					var style=window.getComputedStyle(notes),disp=style.getPropertyValue('display');notes.style.display=(disp=='block')?'none':'block'}
 					
@@ -157,15 +197,35 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 					.fla_debug{background-color:#3C3F42;border:1px solid black;padding:10px;color:white;text-align:left;margin-bottom:1px}
 					.fla_dbgr{position:relative;min-height:40px;min-width:40px;opacity:0.9;transition:opacity 0.2s ease-in-out}
 					.fla_dbgr:hover{opacity:1}.fla_close:hover{background-color:red;color:white}
-					.fla_dbgr pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-size:13px!important;font-family:'Courier New',Courier,monospace!important}
+					.fla_dbgr pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-size:13px!important;font-family:'Courier New',Courier,monospace!important;border:0px!important;background:none!important;}
 					.fla_key,.fla_array,.fla_array div{font-family:'Courier New',Courier,monospace!important;font-weight:bold;color:white}
 					.fla_debug .fla_key{cursor: pointer; font-weight: bold; color: #FF6633}
 					.fla_debug .fla_key:hover{text-decoration: underline;}
-					.fla_debug div.fla_inner_array{margin-left: 30px;}</style>
-			<!-- flaviu@cimpan.ro   -->
-		";
+					.fla_debug div.fla_inner_array{margin-left: 30px;}</style>";
+					$fla_css = TRUE;
+		}
+}
 
-	// die if necessary
-		if($die) exit;
+function fla_print_lite($arg1, $type, $custom){
+	global $fla_css;
+
+	// custom array folding
+		if(!is_array($arg1)) 	$arg1 = htmlentities(print_r($arg1, TRUE));
+		else 					$arg1 = foldable_array_lite($arg1);
+
+	// display
+		echo "<!-- flaviu@cimpan.ro  - DEBUGGER LITE -->
+				<div class='fla_dbgr_lite'><div class='fla_debug_lite'>".$custom."<span style='color: yellow'>(".$type.")</span><pre>".$arg1."</pre></div></div>";
+		if(isset($fla_css) && $fla_css) return;
+		else{echo "<style>
+					.fla_debug_lite{background-color:#000;padding:10px;color:white;text-align:left;margin-bottom:1px}
+					.fla_dbgr_lite{position:relative;min-height:40px;min-width:40px;}
+					.fla_dbgr_lite pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-size:13px!important;font-family:'Courier New',Courier,monospace!important;border:0px!important;background:none!important;}
+					.fla_key,.fla_array,.fla_array div{font-family:'Courier New',Courier,monospace!important;font-weight:bold;color:white}
+					.fla_debug_lite .fla_key{font-weight: bold; color: #FF6633}
+					.fla_debug_lite div.fla_inner_array{margin-left: 30px;}
+				</style>";
+				$fla_css = TRUE;
+		}
 }
 ?>
