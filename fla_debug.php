@@ -45,14 +45,14 @@ function foldable_array($arr){
 function foldable_array_lite($arr){
 	$new_arg = '';
 	foreach($arr as $key => $value){
-		$new_arg .= '<div><span class="fla_key">['.$key.']</span><span> => ';
+		$new_arg .= '<div><span class="fla_key">['.$key.']</span><span style="color:#FFF"> => ';
 		if(is_array($value) || is_object($value)){
 			$fold_arr = foldable_array($value);
 			$fold_arr = !is_string($fold_arr) ? implode('', $fold_arr) : $fold_arr;
 			$new_arg .= 'Array<br>{<br><div class="fla_inner_array">'.$fold_arr.'</div>}';
 		}
 		else
-			$new_arg .= '<div style="display: inline">'.htmlentities($value).'</div>';
+			$new_arg .= '<div class="fla_single">'.htmlentities($value).'</div>';
 		$new_arg .= '</span></div>';
 		$arr = $new_arg;
 	}
@@ -229,6 +229,7 @@ function fla_print_lite($arg1, $type, $custom){
 					.fla_debug_lite .fla_key{font-weight: bold; color: #FF6633}
 					.fla_debug_lite.white{background-color:#DDD}
 					.fla_debug_lite div.fla_inner_array{margin-left: 30px;}
+					.fla_single{display: inline; color: #FFF;font-family:'Courier New',Courier,monospace!important}
 				</style>";
 				$fla_css = TRUE;
 		}
