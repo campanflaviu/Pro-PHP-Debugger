@@ -21,10 +21,11 @@ usage
  custom output
  
  ```php
-    fla('_funcs');		// all user declared and available functions
-    fla('_vars');		// all user defined variables
-    fla('_trace');      // backtrace
-    fla('_server');   	// server details
+    fla('_funcs');		      // all user declared and available functions
+    fla('_vars');		      // all user defined variables
+    fla('_trace');            // backtrace
+    fla('_server');   	      // server details
+    fla('_file', 'file.php'); // output code formatted php file
 ```
 
 changelog
@@ -34,6 +35,7 @@ changelog
            - include css and js only once
            - fixed notice
            - constant shortened
+           - output php file option
            
     v0.5   - added server details (_server) - memory usage, cpu load, OS, hostname, interface between browser and php, php version
     
@@ -61,7 +63,7 @@ todo
     - [x] IP filter
     - [x] memory usage
     - [x] cpu usage? (sys_getloadavg)
-    - [ ] highlight_file('file.php')
+    - [x] highlight_file('file.php')
     - [x] php_uname (host OS), php_sapi_name (interface between web server and PHP)
     - [x] PHP_VERSION
     - [ ] dockable option
