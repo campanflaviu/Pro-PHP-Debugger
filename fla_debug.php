@@ -8,15 +8,18 @@
 // 
 
 // config
-	define('FLA_VERSION',   '0.6');
+	define('FLA_VERSION',   '0.6.1');
 	define('ENABLED',   	TRUE);
 
-	define('VIEW_FILTER', 	'USER_AGENT'); // or 'DEBUG_IP' or FALSE (caution!)
+	define('VIEW_FILTER', 	'USER_AGENT'); // or 'DEBUG_IP' or USER_AGENT or FALSE (caution!)
 	define('DEBUG_IP',  	'0.0.0.0');
 	define('USER_AGENT', 	'flaviu@cimpan.ro');
 
+
+
 // include CSS and JS only once
-	if(!isset($fla_css)) $fla_css = FALSE;
+	if(!isset($fla_css)) 		$fla_css 		= FALSE;
+	if(!isset($fla_css_lite)) 	$fla_css_lite 	= FALSE;
 
 function fla_sandbox(){ // check if sandbox values are applied
 	if(!ENABLED) return FALSE;
@@ -77,6 +80,9 @@ function get_cpu_usage(){
 }
 
 function fla($arg1, $custom_text = "", $die = FALSE){
+	// exit if VIEW_FILTER is not applied or not ENABLED
+		if(!fla_sandbox()) return;
+
 	$r = fla_process($arg1, $custom_text, $die);
 	fla_print_full($r['arg'], $r['type'], $r['custom']);
 	
@@ -85,6 +91,9 @@ function fla($arg1, $custom_text = "", $die = FALSE){
 }
 
 function flb($arg1, $custom_text = "", $die = FALSE){
+	// exit if VIEW_FILTER is not applied or not ENABLED
+		if(!fla_sandbox()) return;
+
 	$r = fla_process($arg1, $custom_text, $die);
 	fla_print_lite($r['arg'], $r['type'], $r['custom']);
 
@@ -93,9 +102,6 @@ function flb($arg1, $custom_text = "", $die = FALSE){
 }
 
 function fla_process($arg1, $custom_text, $die){
-	// exit if VIEW_FILTER is not applied or not ENABLED
-	if(!fla_sandbox()) return;
-
 	// custom text
 		if($custom_text === TRUE) {
 			$die = TRUE;
@@ -210,7 +216,7 @@ function fla_print_full($arg1, $type, $custom){
 }
 
 function fla_print_lite($arg1, $type, $custom){
-	global $fla_css;
+	global $fla_css_lite;
 
 	// custom array folding
 		if(!is_array($arg1) && $type != 'FILE') $arg1 = htmlentities(print_r($arg1, TRUE));
@@ -220,7 +226,7 @@ function fla_print_lite($arg1, $type, $custom){
 	// display
 		echo "<!-- flaviu@cimpan.ro  - DEBUGGER LITE -->
 				<div class='fla_dbgr_lite'><div class='fla_debug_lite".(($type != 'FILE') ? "'>".$custom."<span style='color: yellow'>(".$type.")</span><pre>".$arg1."</pre>" : " white'>".$arg1)."</div></div>";
-		if(isset($fla_css) && $fla_css) return;
+		if(isset($fla_css_lite) && $fla_css_lite) return;
 		else{echo "<style>
 					.fla_debug_lite{background-color:#000;padding:10px;color:white;text-align:left;margin-bottom:1px}
 					.fla_dbgr_lite{position:relative;min-height:40px;min-width:40px;}
@@ -231,7 +237,7 @@ function fla_print_lite($arg1, $type, $custom){
 					.fla_debug_lite div.fla_inner_array{margin-left: 30px;}
 					.fla_single{display: inline; color: #FFF;font-family:'Courier New',Courier,monospace!important}
 				</style>";
-				$fla_css = TRUE;
+				$fla_css_lite = TRUE;
 		}
 }
 ?>
