@@ -31,6 +31,8 @@ usage
 changelog
 =========
 
+    v0.6.1 - bug fixes
+    
     v0.6   - lite version (flb() - stripped css and removed js)
            - include css and js only once
            - fixed notice
