@@ -238,6 +238,6 @@ function fla_print_lite($arg1, $type, $custom){
 					.fla_single{display: inline; color: #FFF;font-family:'Courier New',Courier,monospace!important}
 				</style>";
 				$fla_css_lite = TRUE;
-		}
+		}   
 }
 ?>
