@@ -187,7 +187,7 @@ function fla_print_full($arg1, $type, $custom){
 
 	// display
 		echo "<!-- flaviu@cimpan.ro  - DEBUGGER -->
-				<div class='fla_dbgr'><div class='fla_debug".(($type != 'FILE') ? "'>".$custom."<span class='fla_descr' style='color: yellow'>(".$type.")</span><pre>".$arg1."</pre id='fla_pre'>" : " white'>".$arg1)."</div><div class='fla_close' onClick='hide_fla(this)'>D</div></div>";
+				<div class='fla_dbgr'><div class='fla_debug".(($type != 'FILE') ? "'>".$custom."<span style='color: yellow; font-family: Arial;'>(".$type.")</span><pre>".$arg1."</pre>" : " white'>".$arg1)."</div><div class='fla_close' onClick='hide_fla(this)'>D</div></div>";
 		if(isset($fla_css) && $fla_css) return;
 		else{
 			echo "<script>function hide_fla(e){var el=e.parentNode,notes=null
@@ -225,7 +225,7 @@ function fla_print_lite($arg1, $type, $custom){
 
 	// display
 		echo "<!-- flaviu@cimpan.ro  - DEBUGGER LITE -->
-				<div class='fla_dbgr_lite'><div class='fla_debug_lite".(($type != 'FILE') ? "'>".$custom."<span style='color: yellow'>(".$type.")</span><pre>".$arg1."</pre>" : " white'>".$arg1)."</div></div>";
+				<div class='fla_dbgr_lite'><div class='fla_debug_lite".(($type != 'FILE') ? "'>".$custom."<span style='color: yellow; font-family: Arial;'>(".$type.")</span><pre>".$arg1."</pre>" : " white'>".$arg1)."</div></div>";
 		if(isset($fla_css_lite) && $fla_css_lite) return;
 		else{echo "<style>
 					.fla_debug_lite{background-color:#000;padding:10px;color:white;text-align:left;margin-bottom:1px}
