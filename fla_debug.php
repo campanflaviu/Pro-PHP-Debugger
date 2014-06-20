@@ -187,7 +187,7 @@ function fla_print_full($arg1, $type, $custom){
 
 	// display
 		echo "<!-- flaviu@cimpan.ro  - DEBUGGER -->
-				<div class='fla_dbgr'><div class='fla_debug".(($type != 'FILE') ? "'>".$custom."<span style='color: yellow; font-family: Arial;'>(".$type.")</span><pre>".$arg1."</pre>" : " white'>".$arg1)."</div><div class='fla_close' onClick='hide_fla(this)'>D</div></div>";
+				<div class='fla_dbgr'><div class='fla_debug".(($type != 'FILE') ? "'>".$custom."<span style='color: yellow;font:normal 13px arial,sans-serif!important;'>(".$type.")</span><pre>".$arg1."</pre>" : " white'>".$arg1)."</div><div class='fla_close' onClick='hide_fla(this)'>D</div></div>";
 		if(isset($fla_css) && $fla_css) return;
 		else{
 			echo "<script>function hide_fla(e){var el=e.parentNode,notes=null
@@ -205,9 +205,9 @@ function fla_print_full($arg1, $type, $custom){
 					.fla_debug{background-color:#3C3F42;border:1px solid black;padding:10px;color:white;text-align:left;margin-bottom:1px}
 					.fla_dbgr{position:relative;min-height:40px;min-width:40px;opacity:0.9;transition:opacity 0.2s ease-in-out}
 					.fla_dbgr:hover{opacity:1}.fla_close:hover{background-color:red;color:white}
-					.fla_dbgr pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-size:13px!important;font-family:'Courier New',Courier,monospace!important;border:0px!important;background:none!important;}
+					.fla_dbgr pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-size:13px!important;font-family:'Courier New',Courier,monospace!important;border:0px!important;background:none!important;color:#FFF!important}
 					.fla_key,.fla_array,.fla_array div{font-family:'Courier New',Courier,monospace!important;font-weight:bold;color:white}
-					.fla_debug .fla_key{cursor: pointer; font-weight: bold; color: #FF6633}
+					.fla_debug .fla_key{cursor:pointer;font-weight:bold;color:#FF6633}
 					.fla_debug .fla_key:hover{text-decoration: underline;}
 					.fla_debug.white{background-color:#DDD}
 					.fla_debug div.fla_inner_array{margin-left: 30px;}</style>";
@@ -225,14 +225,14 @@ function fla_print_lite($arg1, $type, $custom){
 
 	// display
 		echo "<!-- flaviu@cimpan.ro  - DEBUGGER LITE -->
-				<div class='fla_dbgr_lite'><div class='fla_debug_lite".(($type != 'FILE') ? "'>".$custom."<span style='color: yellow; font-family: Arial;'>(".$type.")</span><pre>".$arg1."</pre>" : " white'>".$arg1)."</div></div>";
+				<div class='fla_dbgr_lite'><div class='fla_debug_lite".(($type != 'FILE') ? "'>".$custom."<span style='color:yellow;font:normal 13px arial,sans-serif!important;'>(".$type.")</span><pre>".$arg1."</pre>" : " white'>".$arg1)."</div></div>";
 		if(isset($fla_css_lite) && $fla_css_lite) return;
 		else{echo "<style>
 					.fla_debug_lite{background-color:#000;padding:10px;color:white;text-align:left;margin-bottom:1px}
 					.fla_dbgr_lite{position:relative;min-height:40px;min-width:40px;}
-					.fla_dbgr_lite pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-size:13px!important;font-family:'Courier New',Courier,monospace!important;border:0px!important;background:none!important;}
+					.fla_dbgr_lite pre{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;font-size:13px!important;font-family:'Courier New',Courier,monospace!important;border:0px!important;background:none!important;color:#FFF!important}
 					.fla_key,.fla_array,.fla_array div{font-family:'Courier New',Courier,monospace!important;font-weight:bold;color:white}
-					.fla_debug_lite .fla_key{font-weight: bold; color: #FF6633}
+					.fla_debug_lite .fla_key{font-weight:bold;color:#FF6633}
 					.fla_debug_lite.white{background-color:#DDD}
 					.fla_debug_lite div.fla_inner_array{margin-left: 30px;}
 					.fla_single{display: inline; color: #FFF;font-family:'Courier New',Courier,monospace!important}
