@@ -13,7 +13,7 @@
 
 	define('VIEW_FILTER', 	'USER_AGENT'); // or 'DEBUG_IP' or USER_AGENT or FALSE (caution!)
 	define('DEBUG_IP',  	'0.0.0.0');
-	define('USER_AGENT', 	'flaviu@cimpan.ro');
+	define('USER_AGENT', 	'custom_user_agent_string');
 
 
 
@@ -186,7 +186,7 @@ function fla_print_full($arg1, $type, $custom){
 		else $arg1 = foldable_array($arg1);
 
 	// display
-		echo "<!-- flaviu@cimpan.ro  - DEBUGGER -->
+		echo "<!-- DEBUGGER -->
 				<div class='fla_dbgr'><div class='fla_debug".(($type != 'FILE') ? "'>".$custom."<span style='color: yellow;font:normal 13px arial,sans-serif!important;'>(".$type.")</span><pre>".$arg1."</pre>" : " white'>".$arg1)."</div><div class='fla_close' onClick='hide_fla(this)'>D</div></div>";
 		if(isset($fla_css) && $fla_css) return;
 		else{
@@ -224,7 +224,7 @@ function fla_print_lite($arg1, $type, $custom){
 		else $arg1 = foldable_array_lite($arg1);
 
 	// display
-		echo "<!-- flaviu@cimpan.ro  - DEBUGGER LITE -->
+		echo "<!-- DEBUGGER LITE -->
 				<div class='fla_dbgr_lite'><div class='fla_debug_lite".(($type != 'FILE') ? "'>".$custom."<span style='color:yellow;font:normal 13px arial,sans-serif!important;'>(".$type.")</span><pre>".$arg1."</pre>" : " white'>".$arg1)."</div></div>";
 		if(isset($fla_css_lite) && $fla_css_lite) return;
 		else{echo "<style>
